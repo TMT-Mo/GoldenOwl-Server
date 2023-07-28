@@ -1,0 +1,268 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API documentation",
+    "version": "1.0.0",
+    "description": "API description"
+  },
+  "tags": [
+    {
+      "name": "Products"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Product": {
+        "$ref": "#/definitions/Product"
+      }
+    }
+  },
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/api/v1/products": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Get a list of products in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/getProductList"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Products"],
+        "summary": "Create new product in system",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/createProduct"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "201": {
+            "description": {
+              "message": "Create product successfully!",
+              "code": 201
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/SuccessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/products/{id}": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Get a product in system",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Product"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Products"],
+        "summary": "Update an existed product in system",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/updateProduct"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "201": {
+            "description": {
+              "message": "Update product successfully!",
+              "code": 201
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/SuccessResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Products"],
+        "summary": "Delete an existed product in system",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "201": {
+            "description": {
+              "message": "Delete product successfully!",
+              "code": 201
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/SuccessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Product": {
+      "properties": {
+        "id": {
+          "type": "number",
+          "uniqueItems": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number"
+        },
+        "color": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        }
+      }
+    },
+    "createProduct": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number"
+        },
+        "color": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        }
+      }
+    },
+    "deleteProduct": {
+      "properties": {
+        "id": {
+          "type": "number",
+          "uniqueItems": true
+        }
+      }
+    },
+    "updateProduct": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number"
+        },
+        "color": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        }
+      }
+    },
+    "getProductList": {
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Product"
+          }
+        }
+      }
+    },
+    "SuccessResponse": {
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "code": {
+          "type": "number",
+          "default": 201
+        }
+      }
+    },
+    "ErrorResponse": {
+      "properties": {
+        "errorMessage": {
+          "type": "string"
+        },
+        "code": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}
